@@ -40,4 +40,40 @@ and then switch all uses of `derive_try_from_primitive` to `num_enum`.
 
 
 
- 
+## Trait stuff
+Conditionally implement methods on a generic type depending on trait bounds.
+```
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+    }
+}
+```
+Using a trait bound with an impl block that uses generic type parameters,  
+can implement methods conditionally for types that implement the specified  
+traits.  
+
+Example:    `struct Pair<T>` only implements the `cmp_display` method if its  
+inner  type `T` implements `PartialOrd` and `Display`
+
+
+Also can conditionally implement a trait for any type that implements another  
+trait. Implementations on any type that satisfies the trait bounds are called  
+*blanket implementations*.  
+Exxample:   stdlib implemnts `ToString` trait for any type that implements the  
+`Display` trait. looks like:  
+```
+impl<T: Display> ToString for T {
+    //  ...
+}
+```
+
+### Questions
+should implement `From` trait when given type is the error type from `num_enum`  
+and the returned type is our error type.  
+Need this because the question operator will inject  
+`if is error { return From::from(unwrapped_err); }`  
+And the type param T is for the TTryfromPrimitiveError, which is generic over  
+types implementing `TryFromPrimitive`
+
+
+
