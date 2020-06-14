@@ -336,8 +336,8 @@ impl<'a> Iterator for IcsIterator<'a> {
 
         let ty = match IcsType::try_from(self.bytes[0]) {
             Ok(ty) => ty,
-            Error(e) => {
-                return Some(e);
+            _ => {
+                return Some(Err(Error::InvalidValue(format!(""))));
             }
         };
         let len = self.bytes[1] as usize;

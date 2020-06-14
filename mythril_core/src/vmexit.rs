@@ -289,10 +289,7 @@ impl ExtendedExitInformation for VectoredEventInformation {
             vector: (inter_info & 0xff) as u8,
             interrupt_type: InterruptType::try_from(
                 ((inter_info & 0x700) >> 8) as u8,
-            )
-            .ok_or_else(|| {
-                Error::InvalidValue("Invalid interrupt type".into())
-            })?,
+            )?,
             error_code: error_code,
             nmi_unblocking_iret: inter_info & (1 << 12) != 0,
             valid: inter_info & (1 << 31) != 0,
@@ -450,18 +447,13 @@ impl ExtendedExitInformation for CrInformation {
     fn from_active_vmcs(vmcs: &vmcs::ActiveVmcs) -> Result<Self> {
         let qualifier = vmcs.read_field(vmcs::VmcsField::ExitQualification)?;
         let access_type =
-            CrAccessType::try_from(((qualifier & 0b110000) >> 4) as u8)
-                .ok_or_else(|| {
-                    Error::InvalidValue("Invalid CR access type".into())
-                })?;
+            CrAccessType::try_from(((qualifier & 0b110000) >> 4) as u8)?;
         let reg = ((qualifier & 0xf00) >> 8) as u8;
         let cr_num = (qualifier & 0b1111) as u8;
         let (cr_num, reg, source) = match access_type {
             CrAccessType::MovToCr | CrAccessType::MovFromCr => (
                 cr_num,
-                Some(MovCrRegister::try_from(reg).ok_or_else(|| {
-                    Error::InvalidValue("Invalid general register".into())
-                })?),
+                Some(MovCrRegister::try_from(reg)?),
                 None,
             ),
             _ => (0, None, Some(((qualifier & 0xffff0000) >> 16) as u16)),

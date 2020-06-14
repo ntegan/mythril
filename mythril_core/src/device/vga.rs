@@ -106,12 +106,7 @@ impl EmulatedDevice for VgaController {
             Self::VGA_INDEX => match val {
                 PortWriteRequest::OneByte(b) => {
                     self.index =
-                        VgaRegister::try_from(b[0]).ok_or_else(|| {
-                            Error::InvalidValue(format!(
-                                "Invalid vga register 0x{:x}",
-                                b[0]
-                            ))
-                        })?
+                        VgaRegister::try_from(b[0])?;
                 }
 
                 // The VGA controller allows a register update and data write
@@ -121,12 +116,7 @@ impl EmulatedDevice for VgaController {
                     let index = bytes[1];
                     let data = bytes[0];
                     self.index =
-                        VgaRegister::try_from(index).ok_or_else(|| {
-                            Error::InvalidValue(format!(
-                                "Invalid vga register 0x{:x}",
-                                index
-                            ))
-                        })?;
+                        VgaRegister::try_from(index)?;
                     self.registers[self.index as usize] = data;
                 }
                 _ => {

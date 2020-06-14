@@ -133,24 +133,13 @@ impl GenericAddressStructure {
         }
 
         let address_space =
-            AddressSpaceID::try_from(bytes[offsets::GAS_ADDRESS_SPACE])
-                .ok_or_else(|| {
-                    Error::InvalidValue(format!(
-                        "Invalid Address Space ID: {}",
-                        bytes[offsets::GAS_ADDRESS_SPACE]
-                    ))
-                })?;
+            AddressSpaceID::try_from(bytes[offsets::GAS_ADDRESS_SPACE])?;
 
         let bit_width = bytes[offsets::GAS_BIT_WIDTH];
         let bit_offset = bytes[offsets::GAS_BIT_OFFSET];
 
-        let access_size = AccessSize::try_from(bytes[offsets::GAS_ACCESS_SIZE])
-            .ok_or_else(|| {
-                Error::InvalidValue(format!(
-                    "Invalid Access Size: {}",
-                    bytes[offsets::GAS_ACCESS_SIZE]
-                ))
-            })?;
+        let access_size = 
+            AccessSize::try_from(bytes[offsets::GAS_ACCESS_SIZE])?;
 
         let address = NativeEndian::read_u64(&bytes[offsets::GAS_ADDRESS]);
 

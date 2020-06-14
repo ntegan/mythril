@@ -1,6 +1,6 @@
 use super::rsdt::SDT;
 use super::GenericAddressStructure;
-use crate::error::{Error, Result};
+use crate::error::Result;
 use byteorder::{ByteOrder, NativeEndian};
 use core::fmt;
 use core::ops::Range;
@@ -70,13 +70,7 @@ impl<'a> HPET<'a> {
             NativeEndian::read_u16(&sdt.table[offsets::MIN_CLOCK_TICK]);
 
         let page_protection =
-            PageProtection::try_from(sdt.table[offsets::PAGE_PROTECTION] & 0xF)
-                .ok_or_else(|| {
-                    Error::InvalidValue(format!(
-                        "Invalid HPET Page Protection type: {}",
-                        sdt.table[offsets::PAGE_PROTECTION] & 0xF
-                    ))
-                })?;
+            PageProtection::try_from(sdt.table[offsets::PAGE_PROTECTION] & 0xF)?;
 
         let hardware_rev_id = (event_timer_block_id & 0xFF) as u8;
         let comparator_count = ((event_timer_block_id >> 8) & 0x1F) as u8;

@@ -85,7 +85,7 @@ pub enum Error {
 }
 
 impl<T: TryFromPrimitive> From<TryFromPrimitiveError<T>> for Error {
-    fn from(error: TryFromPrimitiveError<T>) -> Error {
+    fn from(_error: TryFromPrimitiveError<T>) -> Error {
         Error::InvalidValue(
             String::from("TryFromPrimitiveError: Unable to convert")
         )
