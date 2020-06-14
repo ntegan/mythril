@@ -10,8 +10,8 @@
 
 use crate::error::{Error, Result};
 use byteorder::{ByteOrder, NativeEndian};
-use num_enum::TryFromPrimitive;
 use core::convert::TryFrom;
+use num_enum::TryFromPrimitive;
 use raw_cpuid::CpuId;
 
 /// Support for the High Precision Event Timer (HPET)
@@ -138,7 +138,7 @@ impl GenericAddressStructure {
         let bit_width = bytes[offsets::GAS_BIT_WIDTH];
         let bit_offset = bytes[offsets::GAS_BIT_OFFSET];
 
-        let access_size = 
+        let access_size =
             AccessSize::try_from(bytes[offsets::GAS_ACCESS_SIZE])?;
 
         let address = NativeEndian::read_u64(&bytes[offsets::GAS_ADDRESS]);

@@ -5,9 +5,9 @@ use crate::error::{Error, Result};
 use crate::memory::GuestAddressSpaceViewMut;
 use alloc::boxed::Box;
 use alloc::vec::Vec;
+use core::convert::TryFrom;
 use core::convert::TryInto;
 use num_enum::TryFromPrimitive;
-use core::convert::TryFrom;
 
 #[derive(Clone, Copy, Debug, TryFromPrimitive)]
 #[repr(u8)]
@@ -105,8 +105,7 @@ impl EmulatedDevice for VgaController {
         match port {
             Self::VGA_INDEX => match val {
                 PortWriteRequest::OneByte(b) => {
-                    self.index =
-                        VgaRegister::try_from(b[0])?;
+                    self.index = VgaRegister::try_from(b[0])?;
                 }
 
                 // The VGA controller allows a register update and data write
@@ -115,8 +114,7 @@ impl EmulatedDevice for VgaController {
                 PortWriteRequest::TwoBytes(bytes) => {
                     let index = bytes[1];
                     let data = bytes[0];
-                    self.index =
-                        VgaRegister::try_from(index)?;
+                    self.index = VgaRegister::try_from(index)?;
                     self.registers[self.index as usize] = data;
                 }
                 _ => {

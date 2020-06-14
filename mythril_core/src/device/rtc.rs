@@ -5,9 +5,9 @@ use crate::error::Result;
 use crate::memory::GuestAddressSpaceViewMut;
 use alloc::boxed::Box;
 use alloc::vec::Vec;
+use core::convert::TryFrom;
 use core::convert::TryInto;
 use num_enum::TryFromPrimitive;
-use core::convert::TryFrom;
 
 #[derive(Copy, Clone, Debug, TryFromPrimitive)]
 #[repr(u8)]

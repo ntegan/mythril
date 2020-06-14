@@ -2,10 +2,10 @@ use super::rsdt::SDT;
 use crate::error::{Error, Result};
 use bitflags::bitflags;
 use byteorder::{ByteOrder, NativeEndian};
+use core::convert::TryFrom;
 use core::fmt;
 use core::ops::Range;
 use num_enum::TryFromPrimitive;
-use core::convert::TryFrom;
 
 /// See Table 5-43 in the ACPI spcification.
 ///

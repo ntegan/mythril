@@ -1,7 +1,7 @@
 use crate::vmcs;
 use alloc::string::String;
 use core::convert::TryFrom;
-use num_enum::{TryFromPrimitive,TryFromPrimitiveError};
+use num_enum::{TryFromPrimitive, TryFromPrimitiveError};
 use x86::bits64::rflags;
 use x86::bits64::rflags::RFlags;
 
@@ -86,9 +86,9 @@ pub enum Error {
 
 impl<T: TryFromPrimitive> From<TryFromPrimitiveError<T>> for Error {
     fn from(_error: TryFromPrimitiveError<T>) -> Error {
-        Error::InvalidValue(
-            String::from("TryFromPrimitiveError: Unable to convert")
-        )
+        Error::InvalidValue(String::from(
+            "TryFromPrimitiveError: Unable to convert",
+        ))
     }
 }
 
