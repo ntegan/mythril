@@ -6,7 +6,8 @@ use crate::memory::GuestAddressSpaceViewMut;
 use alloc::boxed::Box;
 use alloc::vec::Vec;
 use core::convert::TryInto;
-use derive_try_from_primitive::TryFromPrimitive;
+use num_enum::TryFromPrimitive;
+use core::convert::TryFrom;
 
 #[derive(Clone, Copy, Debug, TryFromPrimitive)]
 #[repr(u8)]

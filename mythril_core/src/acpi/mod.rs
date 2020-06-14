@@ -10,7 +10,8 @@
 
 use crate::error::{Error, Result};
 use byteorder::{ByteOrder, NativeEndian};
-use derive_try_from_primitive::TryFromPrimitive;
+use num_enum::TryFromPrimitive;
+use core::convert::TryFrom;
 use raw_cpuid::CpuId;
 
 /// Support for the High Precision Event Timer (HPET)

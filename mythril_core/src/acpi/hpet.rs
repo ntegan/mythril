@@ -4,7 +4,8 @@ use crate::error::{Error, Result};
 use byteorder::{ByteOrder, NativeEndian};
 use core::fmt;
 use core::ops::Range;
-use derive_try_from_primitive::TryFromPrimitive;
+use num_enum::TryFromPrimitive;
+use core::convert::TryFrom;
 
 mod offsets {
     use super::*;

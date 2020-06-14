@@ -3,7 +3,8 @@ use crate::memory::GuestPhysAddr;
 use crate::{vcpu, vmcs};
 use alloc::fmt::Debug;
 use bitflags::bitflags;
-use derive_try_from_primitive::TryFromPrimitive;
+use num_enum::TryFromPrimitive;
+use core::convert::TryFrom;
 
 extern "C" {
     pub fn vmexit_handler_wrapper();
